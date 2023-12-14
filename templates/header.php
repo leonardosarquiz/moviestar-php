@@ -2,9 +2,23 @@
 
 require_once("globals.php");
 require_once("db.php");
+require_once("models/Message.php");
+require_once("dao/UserDAO.php");
+$message = new Message($BASE_URL);
 
 
-$flassMessage = [];
+$flassMessage = $message->getMessage();
+
+if (!empty($flassMessage["msg"])) {
+  // Limpar a mensagem
+  $message->clearMessage();
+}
+
+$userDao = new UserDAO($conn, $BASE_URL);
+
+$userData = $userDao->verifyToken(false);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +59,11 @@ $flassMessage = [];
 
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav">
-          <li class="nav-item"><a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a></li>
+          <?php if ($userData) : ?>
+            <p>ta logado</p>
+          <?php else : ?>
+            <li class="nav-item"><a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a></li>
+          <?php endif; ?>
         </ul>
       </div>
     </nav>
