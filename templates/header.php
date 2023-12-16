@@ -37,7 +37,8 @@ $userData = $userDao->verifyToken(false);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- CSS do projeto  -->
-  <link rel="stylesheet" href="<?= $BASE_URL ?>css/styles.css">
+  <link rel="stylesheet" href="<?php $BASE_URL ?>css/styles.css">
+
 </head>
 
 <body>
@@ -60,9 +61,18 @@ $userData = $userDao->verifyToken(false);
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav">
           <?php if ($userData) : ?>
-            <p>ta logado</p>
+            <li class="nav-item"><a href="<?= $BASE_URL ?>newmovie.php" class="nav-link">
+                <i class="far fa-plus-square"></i> Incluir Filme</a>
+            </li>
+            <li class="nav-item"><a href="<?= $BASE_URL ?>dashboard.php" class="nav-link">Meus Filme</a>
+            </li>
+            <li class="nav-item"><a href="<?= $BASE_URL ?>editprofile.php" class="nav-link bold"><?= $userData->name ?></a>
+            </li>
+            <li class="nav-item"><a href="<?= $BASE_URL ?>logout.php" class="nav-link">Sair</a>
+            </li>
           <?php else : ?>
-            <li class="nav-item"><a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a></li>
+            <li class="nav-item"><a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a>
+            </li>
           <?php endif; ?>
         </ul>
       </div>
