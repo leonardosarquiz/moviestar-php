@@ -40,11 +40,74 @@ if ($type === "update") {
   $userData->bio = $bio;
 
 
-  $userDao->update($userData);
 
+  // Upload da imagem
+  if (isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
+
+    $image = $_FILES["image"];
+    $imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+    $jpgArray = ["image/jpeg", "image/jpg"];
+
+
+    $ext = strtolower(substr($image['name'], -4));
+
+    // Checagem de tipo de imagem
+    if (in_array($image["type"], $imageTypes)) {
+
+      // Checar se jpg
+      if ($ext == ".jpg") {
+
+        $imageFile = imagecreatefromjpeg($image["tmp_name"]);
+
+        // Imagem é png
+      } else if ($ext == ".png") {
+
+        $imageFile = imagecreatefrompng($image["tmp_name"]);
+      }
+
+      $imageName = $user->imageGenerateName($ext);
+
+      imagejpeg($imageFile, "./img/users/" . $imageName, 100);
+
+      $userData->image = $imageName;
+    } else {
+
+      $message->setMessage("Tipo inválido de imagem, insira png ou jpg!", "error", "back");
+    }
+  }
+
+
+
+  $userDao->update($userData);
 
   // Atualizar senha do usuário
 } else if ($type === "changepassword") {
+
+
+  // Receber dados do post
+
+  $password = filter_input(INPUT_POST, "password");
+  $confirmpassword = filter_input(INPUT_POST, "confirmpassword");
+
+
+  //Resgata dados do post
+  $userData = $userDao->verifyToken();
+  $id = $userData->id;
+
+
+  if ($password == $confirmpassword) {
+
+    $user = new User();
+
+    $finalPassword = $user->generetaPassword($password);
+
+    $user->password = $finalPassword;
+    $user->id = $id;
+
+    $userDao->changePassword($user);
+  } else {
+    $message->setMessage("As senhas não são iguais!", "error", "back");
+  }
 } else {
   $message->setMessage("Informações inválidas!", "error", "index.php");
 }
