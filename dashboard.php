@@ -36,16 +36,16 @@ $userMovies = $movieDao->getMoviesByUserId($userData->id);
           <tr>
             <td scope="row"><?= $movie->id ?></td>
             <td><a href="<?= $BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="table-movie-title"><?= $movie->title ?></a></td>
-            <td><i class="fas fa-star"></i> <?= $movie->rating ?></td>
+            <td><i class="fas fa-star"></i> 9</td>
             <td class="actions-column">
-              <a href="<?= $BASE_URL ?>editmovie.php?id=<?= $movie->id ?>" class="edit-btn">
+              <a href="<?= $BASE_URL ?>editmovie.php?id=<?= $movie->id ?>" class="edit-btn p-2" style="display: flex; align-items: center; justify-content: center;">
                 <i class="far fa-edit"></i> Editar
               </a>
               <form action="<?= $BASE_URL ?>movie_process.php" method="POST">
                 <input type="hidden" name="type" value="delete">
                 <input type="hidden" name="id" value="<?= $movie->id ?>">
-                <button type="submit" class="delete-btn">
-                  <i class="fas fa-times"></i> Deletar
+                <button type="submit" class="delete-btn mt-3" style="display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-times" style="margin-right: 3px;"></i> Deletar
                 </button>
               </form>
             </td>

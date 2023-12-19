@@ -110,6 +110,28 @@ class MovieDAO implements MovieDAOInterface
   }
   public function findById($id)
   {
+
+
+
+    $movie = [];
+
+    $stmt = $this->conn->prepare("SELECT * FROM movies WHERE id = :id");
+
+
+    $stmt->bindParam(":id", $id);
+
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+
+      $movieData = $stmt->fetch();
+
+      $movie = $this->buildMovie($movieData);
+
+      return $movie;
+    } else {
+      return false;
+    }
   }
   public function findByTitle($title)
   {
@@ -134,8 +156,32 @@ class MovieDAO implements MovieDAOInterface
   }
   public function update(Movie $movie)
   {
+    $stmt = $this->conn->prepare("UPDATE movies SET title = :title, description = :description, image = :image, category = :category, trailer = :trailer, length = :length WHERE id = :id");
+
+    $stmt->bindParam(":title", $movie->title);
+    $stmt->bindParam(":description", $movie->description);
+    $stmt->bindParam(":image", $movie->image);
+    $stmt->bindParam(":category", $movie->category);
+    $stmt->bindParam(":trailer", $movie->trailer);
+    $stmt->bindParam(":length", $movie->length);
+    $stmt->bindParam(":id", $movie->id);
+
+    $stmt->execute();
+
+
+    // Mensagem de sucesso por editar filme
+    $this->message->setMessage("Filme atualizado com sucesso!", "success", "dashboard.php");
   }
   public function destroy($id)
   {
+
+    $stmt = $this->conn->prepare('DELETE FROM movies WHERE id = :id');
+
+    $stmt->bindParam(":id", $id);
+
+    $stmt->execute();
+
+    // Redireciona para o perfil do usuario
+    $this->message->setMessage("Filme removido com sucesso!", "success", "dashboard.php");
   }
 }

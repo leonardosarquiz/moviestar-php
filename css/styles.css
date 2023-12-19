@@ -55,6 +55,7 @@
   color: #fff;
   margin: 20px;
   transition: .5s;
+
 }
 
 .nav-link:hover {
@@ -245,6 +246,53 @@
 #review-form .card-btn,
 #edit-movie-form .card-btn {
   width: auto;
+}
+
+
+/* Profile */
+.profile-container {
+  justify-content: center;
+}
+
+.profile-container .profile-image {
+  margin: 20px auto;
+}
+
+.about-title {
+  color: #CCC;
+}
+
+.profile-description {
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.added-movies-container,
+.about-container {
+  padding-top: 20px;
+}
+
+.about-container {
+  text-align: center;
+  background-color: #333;
+  border-bottom: 3px solid #CCC;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+
+}
+
+.added-movies-container {
+  background-color: #333;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.added-movies-container .movies-container {
+  padding: 20px;
+}
+
+.added-movies-container .movie-card {
+  width: 31%;
 }
 
 
