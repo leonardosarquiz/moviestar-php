@@ -105,7 +105,7 @@ class ReviewDao implements ReviewDAOInterface
   }
   public function getRatings($id)
   {
-    $stmt = $this->conn->prepare("SELECT * FROM reviews WHERE movies_id = :movies_id");
+    $stmt = $this->conn->prepare("SELECT * FROM review WHERE movies_id = :movies_id");
 
     $stmt->bindParam(":movies_id", $id);
 
@@ -125,5 +125,6 @@ class ReviewDao implements ReviewDAOInterface
     } else {
       $rating = "Não avaliado";
     }
+    return $rating;
   }
 }
